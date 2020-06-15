@@ -1,0 +1,107 @@
+/* question
+
+面试题03. 数组中重复的数字
+找出数组中重复的数字。
+
+
+在一个长度为 n 的数组 nums 里的所有数字都在 0～n-1 的范围内。数组中某些数字是重复的，但不知道有几个数字重复了，也不知道每个数字重复了几次。请找出数组中任意一个重复的数字。
+
+示例 1：
+
+输入：
+[2, 3, 1, 0, 2, 5, 3]
+输出：2 或 3 
+ 
+
+限制：
+
+2 <= n <= 100000
+
+*/
+
+/* solution1 
+由于长度为n，内容也为0~n-1，可以原地操作
+检查下标i与nums[i]是否一致，若一致则i+1，若不一致，检查nums[i]与nums[nums[i]]是否一致，一致则返回nums[i]
+否则交换nums[i]与nums[nums[i]]
+若所有元素无重复，则return -1
+时间O(N)
+空间O(1)
+
+class Solution {
+public:
+    int findRepeatNumber(vector<int>& nums) {
+        for(int i = 0; i < nums.size(); ++i)
+        {
+            while(i != nums[i])
+            {
+                if(nums[i] == nums[nums[i]])
+                    return nums[i];
+                swap(nums[i], nums[nums[i]]);
+            }
+
+        }
+
+        return -1;
+    }
+};
+
+*/
+
+
+/* solution2
+空间换时间的方法，申请空间为n的数组，判断是否有重复
+note：申请新数组后需要给每位设置初值，否则会出错
+空间O(N)
+时间O(N)
+
+class Solution {
+public:
+    int findRepeatNumber(vector<int>& nums) {
+        int temp[nums.size()];
+        for(int i = 0; i < nums.size(); ++i)
+            temp[i] = 0;
+
+        for(int i = 0; i < nums.size(); ++i)
+        {
+           temp[nums[i]]++;
+           if(temp[nums[i]] == 2)
+                return nums[i];
+        }
+
+        return -1;
+    }
+};
+
+*/
+
+/* solution3
+用集合实现，有重复的就返回，没有就插入
+空间O(N)
+时间O(N)
+
+class Solution {
+public:
+    int findRepeatNumber(vector<int>& nums) {
+        set<int> mySet;
+
+        for(int i = 0; i < nums.size(); ++i)
+        {
+            if(mySet.count(nums[i]) == 1)
+                return nums[i];
+            else
+                mySet.insert(nums[i]);
+        }
+
+        return -1;
+    }
+};
+*/
+
+/* else solutions
+
+排序数组，遍历一遍看有没有重复的
+空间O(1)
+时间O(NlogN)
+
+
+*/
