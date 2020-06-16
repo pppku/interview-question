@@ -1,0 +1,71 @@
+/* question
+
+输入某二叉树的前序遍历和中序遍历的结果，请重建该二叉树。假设输入的前序遍历和中序遍历的结果中都不含重复的数字。
+
+ 
+
+例如，给出
+
+前序遍历 preorder = [3,9,20,15,7]
+中序遍历 inorder = [9,3,15,20,7]
+返回如下的二叉树：
+
+    3
+   / \
+  9  20
+    /  \
+   15   7
+ 
+
+限制：
+
+0 <= 节点个数 <= 5000
+
+来源：力扣（LeetCode）
+链接：https://leetcode-cn.com/problems/zhong-jian-er-cha-shu-lcof
+著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
+
+*/
+
+/* solution1
+
+递归实现，
+终止条件：中序的begin和end为同一个值（表明没有元素）
+递归体参数：前序数组、中序数组
+时间：O(N)
+空间：O(N)
+
+重点在迭代器的使用，递归参数的计算
+
+
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+ * };
+ */
+class Solution {
+public:
+    TreeNode* buildTree(vector<int>& preorder, vector<int>& inorder) {
+
+        return myBuild(preorder.begin(), preorder.end(), inorder.begin(), inorder.end());
+    }
+
+    TreeNode* myBuild(vector<int>::iterator preBegin, vector<int>::iterator preEnd, vector<int>::iterator midBegin, vector<int>::iterator midEnd)
+    {
+        if(midBegin == midEnd) return NULL;
+        TreeNode *cur = new TreeNode(*preBegin);
+
+        vector<int>::iterator root = find(midBegin, midEnd, *preBegin);
+
+        cur->left = myBuild(preBegin + 1, preBegin + 1 + (root - midBegin), midBegin, root);
+        cur->right = myBuild(preBegin + 1 + (root - midBegin), preEnd, root + 1, midEnd);
+
+        return cur;
+    }
+};
+
+*/
