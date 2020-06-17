@@ -55,6 +55,8 @@ public:
         return false;
     }
 
+    // dfs中包括当前位置、当前深度、board和word
+    // 深度确定要匹配word的第几位、修改board确定哪些已经被遍历
     int match(int i, int j, vector<vector<char>>& board, string word, int count)
     {
         if(i >= board.size() || i < 0 || j >= board[0].size() || j < 0 || board[i][j] != word[count])
@@ -68,6 +70,7 @@ public:
         int res = match(i + 1, j, board, word, count + 1) || match(i - 1, j, board, word, count + 1) || 
                       match(i, j + 1, board, word, count + 1) || match(i , j - 1, board, word, count + 1);
         
+        // 回溯时候还原标志位
         board[i][j] = tmp;
 
         return res;
