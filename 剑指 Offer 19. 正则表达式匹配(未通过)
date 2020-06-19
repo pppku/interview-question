@@ -145,10 +145,8 @@ public:
         }
 
         // .* 末尾0次
-        while(i == s_size && j < p_size)
-        {
-            if(p[j + 1] == '*') j = j + 2; 
-        }
+        while(i == s_size && j < p_size && p[j + 1] == '*') j = j + 2;
+
 
         // 比对指针是否匹配完
         if(i >= s_size && j >= p_size) return true;
