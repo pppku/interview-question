@@ -1,0 +1,128 @@
+/* question
+
+定义一个函数，输入一个链表的头节点，反转该链表并输出反转后链表的头节点。
+
+ 
+
+示例:
+
+输入: 1->2->3->4->5->NULL
+输出: 5->4->3->2->1->NULL
+ 
+
+限制：
+
+0 <= 节点个数 <= 5000
+
+来源：力扣（LeetCode）
+链接：https://leetcode-cn.com/problems/fan-zhuan-lian-biao-lcof
+著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
+
+*/
+
+/* solution1 头插法
+
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode(int x) : val(x), next(NULL) {}
+ * };
+ */
+class Solution {
+public:
+    ListNode* reverseList(ListNode* head) {
+
+        if(!head) return head;
+
+        ListNode* p = new ListNode;
+        p->val = head->val;
+        p->next = NULL;
+
+        ListNode* now = p;
+        head = head->next;
+
+        while(head)
+        {
+            p = new ListNode;
+            p->val = head->val;
+            p->next = now;
+            now = p;
+            head = head->next;
+        }
+
+        return now;
+    }
+};
+
+*/
+
+/* solution2 双指针法
+
+
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode(int x) : val(x), next(NULL) {}
+ * };
+ */
+class Solution {
+public:
+    ListNode* reverseList(ListNode* head) {
+
+        ListNode* pre = NULL;
+        ListNode* now = head;
+
+        while(now)
+        {
+            ListNode* p = now -> next;
+            now->next = pre;
+            pre = now;
+            now = p;
+        }
+
+        return pre;
+    }
+};
+
+*/
+
+
+/* solution3 递归
+
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode(int x) : val(x), next(NULL) {}
+ * };
+ */
+class Solution {
+public:
+    ListNode* reverseList(ListNode* head) {
+
+        if(head == NULL || head->next == NULL) return head;
+
+        ListNode* res = reverseList(head->next);
+
+        head->next->next = head;
+        head->next = NULL;
+
+        return res;
+    }
+};
+
+
+*/
+
+
+/* solution4 妖魔化双指针
+
+
+
+
+*/
