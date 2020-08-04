@@ -123,6 +123,30 @@ public:
 /* solution4 妖魔化双指针
 
 
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode(int x) : val(x), next(NULL) {}
+ * };
+ */
+class Solution {
+public:
+    ListNode* reverseList(ListNode* head) {
 
+        if(head == NULL) return head;
+        ListNode* now = head;
+        while(head->next != NULL)
+        {
+            ListNode* t = head->next->next;
+            head->next->next = now;
+            now = head->next;
+            head->next = t;
+        }
+
+        return now;
+    }
+};
 
 */
