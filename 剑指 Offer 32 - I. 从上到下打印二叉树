@@ -1,0 +1,118 @@
+/* question
+
+从上到下打印出二叉树的每个节点，同一层的节点按照从左到右的顺序打印。
+
+ 
+
+例如:
+给定二叉树: [3,9,20,null,null,15,7],
+
+    3
+   / \
+  9  20
+    /  \
+   15   7
+返回：
+
+[3,9,20,15,7]
+ 
+
+提示：
+
+节点总数 <= 1000
+
+来源：力扣（LeetCode）
+链接：https://leetcode-cn.com/problems/cong-shang-dao-xia-da-yin-er-cha-shu-lcof
+著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
+
+
+*/
+
+/* solution1 双栈实现
+
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+ * };
+ */
+class Solution {
+public:
+    vector<int> levelOrder(TreeNode* root) {
+
+        vector<int> res;
+        if(root == nullptr) return res;
+
+        stack<TreeNode*> sta;
+        stack<TreeNode*> sta2;
+        sta.push(root);
+
+        while(!sta.empty())
+        {
+            while(!sta.empty())
+            {
+                TreeNode* tem = sta.top();
+                res.push_back(tem->val);
+                sta.pop();
+                sta2.push(tem);
+            }
+
+            while(!sta2.empty())
+            {
+                TreeNode* tem = sta2.top();
+                if(tem->right != nullptr) sta.push(tem->right);
+                if(tem->left != nullptr) sta.push(tem->left);
+                sta2.pop();
+            }
+
+        }
+
+        return res;
+
+    }
+};
+
+
+*/
+
+/* solution2 队列实现
+
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+ * };
+ */
+class Solution {
+public:
+    vector<int> levelOrder(TreeNode* root) {
+
+        vector<int> res;
+        if(root == nullptr) return res;
+
+        queue<TreeNode*> que;
+
+        que.push(root);
+
+        while(!que.empty())
+        {
+            TreeNode* tem = que.front();
+            res.push_back(tem->val);
+            que.pop();
+
+            if(tem->left != nullptr) que.push(tem->left);
+            if(tem->right != nullptr) que.push(tem->right);
+        }
+
+        return res;
+
+    }
+};
+
+*/
