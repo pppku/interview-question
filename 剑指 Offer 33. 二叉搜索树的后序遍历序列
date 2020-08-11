@@ -1,0 +1,99 @@
+/* question
+
+输入一个整数数组，判断该数组是不是某二叉搜索树的后序遍历结果。如果是则返回 true，否则返回 false。假设输入的数组的任意两个数字都互不相同。
+
+ 
+
+参考以下这颗二叉搜索树：
+
+     5
+    / \
+   2   6
+  / \
+ 1   3
+示例 1：
+
+输入: [1,6,3,2,5]
+输出: false
+示例 2：
+
+输入: [1,3,2,6,5]
+输出: true
+ 
+
+提示：
+
+数组长度 <= 1000
+
+来源：力扣（LeetCode）
+链接：https://leetcode-cn.com/problems/er-cha-sou-suo-shu-de-hou-xu-bian-li-xu-lie-lcof
+著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
+
+*/
+
+
+/* solution 递归方式
+
+class Solution {
+public:
+    bool verifyPostorder(vector<int>& postorder) {
+        if(postorder.size() <= 1) return true;
+
+        return recur(postorder, 0, postorder.size() - 1);
+    }
+
+    bool recur(vector<int>& postorder, int i, int j)
+    {
+        if(i >= j) return true;
+
+        // 找到第一个大于根节点的数
+        int middle;
+        for(middle = i; middle < j; ++middle)
+        {
+            if(postorder[middle] > postorder[j]) break;
+        }
+
+        int p;
+        for(p = middle + 1; p < j; ++p)
+        {
+            if(postorder[p] < postorder[j]) return false;
+        }
+
+
+        return recur(postorder, i, middle - 1) && recur(postorder, middle, j - 1);
+
+    }
+};
+
+*/
+
+
+/* solution 栈方式
+右子树都遍历完了修改根 保证左小右大
+
+class Solution {
+public:
+    bool verifyPostorder(vector<int>& postorder) {
+        stack<int> sta;
+        int root = INT_MAX;
+
+        for(int i = postorder.size() - 1; i >= 0; --i)
+        {
+            if(postorder[i] > root) return false;
+
+            while(!sta.empty() && sta.top() > postorder[i])
+            {
+                root = sta.top();
+                sta.pop();
+            } 
+
+            sta.push(postorder[i]);
+        }
+
+        return true;
+
+    }
+
+};
+
+*/
