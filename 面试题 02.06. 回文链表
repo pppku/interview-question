@@ -1,0 +1,93 @@
+/* question
+
+写一个函数，检查输入的链表是否是回文的。
+
+ 
+
+示例 1：
+
+输入： 1->2
+输出： false 
+示例 2：
+
+输入： 1->2->2->1
+输出： true 
+ 
+
+进阶：
+你能否用 O(n) 时间复杂度和 O(1) 空间复杂度解决此题？
+
+来源：力扣（LeetCode）
+链接：https://leetcode-cn.com/problems/palindrome-linked-list-lcci
+著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
+
+*/
+
+
+
+/* solution
+
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode(int x) : val(x), next(NULL) {}
+ * };
+ */
+class Solution {
+public:
+    bool isPalindrome(ListNode* head) {
+
+        // 计算链表长度
+        ListNode* temp = head;
+        int size = 0;
+
+        while(temp)
+        {
+            size++;
+            temp = temp->next;
+        }
+
+        // 翻转前半部分， 保留后半部分
+        ListNode* pre = head;
+        ListNode* tail = head;
+        int middle = size / 2;
+
+        temp = NULL;
+        ListNode* cur = NULL;
+        ListNode* nxt = head;
+        while(middle)
+        {
+            cur = nxt;
+            nxt = nxt->next;
+            cur->next = temp;
+            temp = cur;
+
+            middle--;
+        }
+        pre = cur;
+
+        if(size % 2 == 0) tail = nxt;
+        else tail = nxt->next;
+
+
+        // 对照
+        bool res = true;
+
+        while(pre)
+        {
+            if(pre->val != tail->val)
+            {
+                res = false;
+                break;
+            }
+            pre = pre->next;
+            tail = tail->next;
+        }
+
+        return res;
+    }
+};
+
+*/
