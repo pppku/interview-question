@@ -1,0 +1,119 @@
+/* question
+
+下一个数。给定一个正整数，找出与其二进制表达式中1的个数相同且大小最接近的那两个数（一个略大，一个略小）。
+
+示例1:
+
+ 输入：num = 2（或者0b10）
+ 输出：[4, 1] 或者（[0b100, 0b1]）
+示例2:
+
+ 输入：num = 1
+ 输出：[2, -1]
+提示:
+
+num的范围在[1, 2147483647]之间；
+如果找不到前一个或者后一个满足条件的正数，那么输出 -1。
+
+来源：力扣（LeetCode）
+链接：https://leetcode-cn.com/problems/closed-number-lcci
+著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
+
+*/
+
+
+/* solution
+
+class Solution {
+public:
+    vector<int> findClosedNumbers(int num) {
+        vector<int> res;
+        if(num == INT_MAX || num == INT_MIN) return {-1, -1};
+        int num2 = num;
+
+        // 01 to 10
+        int index = -1;
+        for(int i = 1; i < 32; ++i)
+        {
+            int tem = 1;
+            int left = tem << i;
+            int right = tem << (i - 1);
+            if(((num & left) == 0) && ((num & right) != 0))
+            {
+                num += left;
+                num -= right;
+                index = i;
+                
+                break;
+            }
+        }
+        // subprocess
+        if(index != -1)
+        {
+            index--;
+            int left = index;
+            int right = 0;
+
+            while(left > right)
+            {
+                // find 1 at left
+                while(left >= right && (num & (1 << left)) == 0) left--;
+                // find 0 at right
+                while(right <= left && (num & (1 << right)) != 0) right++;
+
+                if(left > right)
+                {
+                    num -= (1 << left);
+                    num += (1 << right);
+                }
+            }
+            res.push_back(num);
+        }
+        if(res.size() == 0) res.push_back(-1);
+
+        // 10 to 01
+        index = -1;
+        for(int i = 1; i < 32; ++i)
+        {
+            int tem = 1;
+            int left = tem << i;
+            int right = tem << (i - 1);
+            if(((num2 & left) != 0) && ((num2 & right) == 0))
+            {
+                num2 -= left;
+                num2 += right;
+                index = i;
+                break;
+            }
+        }
+        // subprocess
+        if(index != -1)
+        {
+            index--;
+            int left = index;
+            int right = 0;
+
+            while(left > right)
+            {
+                // find 0 at left
+                while(left >= right && (num2 & (1 << left)) != 0) left--;
+                // find 1 at right
+                while(right <= left && (num2 & (1 << right)) == 0) right++;
+
+                if(left > right)
+                {
+                    num2 += (1 << left);
+                    num2 -= (1 << right);
+                }
+            }
+            res.push_back(num2);
+        }
+
+        
+        if(res.size() == 1) res.push_back(-1);
+
+        return res;
+    }
+};
+
+*/
