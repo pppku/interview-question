@@ -1,0 +1,62 @@
+/* question
+
+括号。设计一种算法，打印n对括号的所有合法的（例如，开闭一一对应）组合。
+
+说明：解集不能包含重复的子集。
+
+例如，给出 n = 3，生成结果为：
+
+[
+  "((()))",
+  "(()())",
+  "(())()",
+  "()(())",
+  "()()()"
+]
+
+来源：力扣（LeetCode）
+链接：https://leetcode-cn.com/problems/bracket-lcci
+著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
+
+*/
+
+
+/* solution
+
+class Solution {
+public:
+    vector<string> res;
+    void trackback(stack<char>& op, string str, int left, int right)
+    {
+        // finish condition
+        if(left < 0 || right < 0) return;
+        if(left == 0 && right == 0)
+        {
+            if(str.size() != 0) res.push_back(str);
+            return;
+        }
+
+        // have '('
+        if(!op.empty())
+        {
+            // add ')'
+            op.pop();
+            trackback(op, str + ')', left, right - 1);
+            op.push('(');
+        }
+        // add '('
+        op.push('(');
+        trackback(op, str + '(', left - 1, right);
+        op.pop();
+        
+    }
+    vector<string> generateParenthesis(int n) {
+        stack<char> op;
+        string str = "";
+        trackback(op, str, n, n);
+
+        return res;
+    }
+};
+
+*/
